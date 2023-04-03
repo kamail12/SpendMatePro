@@ -70,10 +70,18 @@ export default function TransactionForm({ uid, balance }) {
 						required
 					/>
 				</label>
-				<button onClick={handleAdd} disabled={!name || !amount}>
+				<button
+					onClick={handleAdd}
+					disabled={!name || !amount}
+					className="btn"
+				>
 					Add Income 💰
 				</button>
-				<button onClick={handleSpend} disabled={!name || !amount}>
+				<button
+					onClick={handleSpend}
+					disabled={!name || !amount}
+					className="btn"
+				>
 					Add Expense 💸
 				</button>
 			</form>
