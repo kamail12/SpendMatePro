@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useFirestore } from "../../hooks/useFirestore";
+import { useState } from "react";
 
 //styles
 import styles from "./Home.module.css";
