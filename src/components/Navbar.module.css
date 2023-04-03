@@ -1,6 +1,6 @@
 .navbar {
 	width: 100%;
-	background: #effaf0;
+	background: rgba(172, 255, 47, 0.544);
 	padding: 20px 10px;
 	box-sizing: border-box;
 }
@@ -19,19 +19,18 @@
 	font-size: 1.2em;
 }
 
-.imgLogo{
+.imgLogo {
 	object-fit: cover;
 	width: 25%;
 	margin-right: auto;
 }
 
-
 .navbar button {
-	margin-left: 16px;
+	margin-left: 15px;
 }
 
 .navbar a {
-	margin-left: 16px;
+	margin-left: 15px;
 	color: #333;
 	text-decoration: none;
 }

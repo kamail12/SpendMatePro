@@ -1,5 +1,6 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCollection } from "../../hooks/useCollection";
+import GoalForm from "./GoalForm";
 
 // styles
 import styles from "./Home.module.css";
@@ -41,6 +42,7 @@ export default function Home() {
 
 			<div className={styles.sidebar}>
 				<TransactionForm uid={user.uid} balance={income - expense} />
+				<GoalForm />
 			</div>
 		</div>
 	);
