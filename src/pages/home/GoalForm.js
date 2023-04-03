@@ -32,7 +32,7 @@ export default function GoalForm() {
 						required
 					/>
 				</label>
-				<button className="btn">Transfer</button>
+				<button className="btn">Transfer Money</button>
 			</form>
 		</>
 	);
