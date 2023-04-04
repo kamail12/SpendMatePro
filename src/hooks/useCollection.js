@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { projectFirestore } from "../firebase/config";
 
 export const useCollection = (collection, _query, _orderBy) => {
-	const [documents, setDocuments] = useState(null);
+	const [documents, setDocuments] = useState([]);
 	const [error, setError] = useState(null);
 
 	const query = useRef(_query).current;
@@ -27,7 +27,6 @@ export const useCollection = (collection, _query, _orderBy) => {
 
 				// update state
 				setDocuments(results);
-				setError(null);
 			},
 			error => {
 				console.log(error);
@@ -37,7 +36,7 @@ export const useCollection = (collection, _query, _orderBy) => {
 
 		// unsubscribe on unmount
 		return () => unsubscribe();
-	}, [collection, query, orderBy]);
+	}, [collection, query, orderBy, setError, setDocuments]);
 
 	return { documents, error };
 };

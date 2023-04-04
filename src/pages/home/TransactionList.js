@@ -1,9 +1,10 @@
 import styles from "./Home.module.css";
 import { useFirestore } from "../../hooks/useFirestore";
+import Goal from "../../components/Goal";
 
 //try use collcet
 
-export default function TransactionList({ transactions, balance }) {
+export default function TransactionList({ transactions, balance, goals }) {
 	const { deleteDocument } = useFirestore("transactions");
 	const color = transaction => {
 		return transaction.type === "income" ? styles.income : styles.expense;
@@ -17,6 +18,8 @@ export default function TransactionList({ transactions, balance }) {
 	return (
 		<>
 			<p className={balanceClasses}>Actuall Saldo = ${balance}</p>
+
+			<Goal goals={goals} />
 
 			<ul className={styles.transactions}>
 				{transactions.map(transaction => (
