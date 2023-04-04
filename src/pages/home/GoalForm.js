@@ -3,14 +3,20 @@ import { useState } from "react";
 //styles
 import styles from "./Home.module.css";
 
-export default function GoalForm() {
+export default function GoalForm({ onAdd }) {
 	const [goalTitle, setGoalTitle] = useState("");
 	const [goalAmount, setGoalAmount] = useState(0);
+
+	const handleSubmit = e => {
+		e.preventDefault();
+
+		onAdd({ goalAmount, goalTitle });
+	};
 
 	return (
 		<>
 			<h3 className={styles.goalTitle}>Add Your Goal 🎯</h3>
-			<form>
+			<form onSubmit={e => handleSubmit(e)}>
 				<label>
 					<span>Your Goal Name:</span>
 					<input
