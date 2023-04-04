@@ -1,5 +1,5 @@
 //style
-import styles from "./Goal.module.css";
+// import styles from "./Goal.module.css";
 
 export default function Goal({ goals }) {
 	return (

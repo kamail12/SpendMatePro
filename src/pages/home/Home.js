@@ -1,6 +1,5 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useCollection } from "../../hooks/useCollection";
-import { useFirestore } from "../../hooks/useFirestore";
 
 // styles
 import styles from "./Home.module.css";
@@ -8,7 +7,7 @@ import styles from "./Home.module.css";
 // components
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
-import GoalForm from "./GoalForm";
+
 import TransactionGoalsForm from "../../components/TransactionGoalsForm";
 
 //try use
@@ -60,5 +59,3 @@ export default function Home() {
 		</div>
 	);
 }
-
-
