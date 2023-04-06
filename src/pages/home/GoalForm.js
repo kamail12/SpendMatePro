@@ -37,7 +37,7 @@ export default function GoalForm({ onAdd }) {
 						required
 					/>
 				</label>
-				<button className="btn">Transfer Money</button>
+				<button className="btn">Set Goal</button>
 			</form>
 		</>
 	);

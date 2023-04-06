@@ -28,16 +28,18 @@ export default function Home() {
 
 	const income = documents
 		.filter(document => document.type === "income")
-		.map(document => parseInt(document.amount))
+		.map(document => parseFloat(document.amount))
 		.reduce((prev, curr) => prev + curr, 0);
 
 	const expense = documents
 		.filter(document => document.type === "expense" || !document.type)
-		.map(document => parseInt(document.amount))
+		.map(document => parseFloat(document.amount))
 		.reduce((prev, curr) => prev + curr, 0);
 
 	// filter goalsDocuments for active set to true
 	const goals = goalsDocuments.filter(goalsDocument => goalsDocument.active);
+
+	//goal trans
 
 	return (
 		<div className={styles.container}>
