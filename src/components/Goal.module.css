@@ -1,0 +1,9 @@
+.goalContainer {
+	padding: 20px;
+	text-align: end;
+	font-size: 1.2em;
+	border: 2px solid gold;
+	/* background-color: gray; */
+	border-radius: 20px;
+    text-transform: capitalize;
+}
