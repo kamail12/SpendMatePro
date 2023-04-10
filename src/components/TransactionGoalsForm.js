@@ -2,9 +2,8 @@ import { useFirestore } from "../hooks/useFirestore";
 import GoalForm from "../pages/home/GoalForm";
 import TransferMoneyToGoal from "../pages/home/TransferMoneyToGoal";
 
-export default function TransactionGoalsForm({ uid, goals }) {
+export default function TransactionGoalsForm({ uid, goal, onTransfer }) {
 	const { addDocument } = useFirestore("goals");
-	const hasGoals = goals.length !== 0;
 
 	const handleAddGoal = async ({ goalTitle, goalAmount }) => {
 		await addDocument({
@@ -15,10 +14,6 @@ export default function TransactionGoalsForm({ uid, goals }) {
 		});
 	};
 
-	const handleTransferMoneyToGoal = ({ transferMoney }) => {
-		console.log(`Przelano właśnie ${transferMoney}$ na cel`);
-	};
-
-	if (!hasGoals) return <GoalForm onAdd={handleAddGoal} />;
-	return <TransferMoneyToGoal onTransfer={handleTransferMoneyToGoal} />;
+	if (!goal) return <GoalForm onAdd={handleAddGoal} />;
+	return <TransferMoneyToGoal onTransfer={onTransfer} />;
 }

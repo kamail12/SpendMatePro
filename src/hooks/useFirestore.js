@@ -38,6 +38,13 @@ const firestoreReducer = (state, action) => {
 				success: true,
 				error: null,
 			};
+		case "UPDATED_DOCUMENT":
+			return {
+				isPending: false,
+				document: action.payload,
+				success: true,
+				error: null,
+			};
 		default:
 			return state;
 	}
@@ -57,6 +64,21 @@ export const useFirestore = collection => {
 		}
 	};
 
+	const updateDocument = async (id, doc) => {
+		if (!id) return; // add dispatch error if id not found
+
+		dispatch({ type: "IS_PENDING" });
+
+		// try {} catch {} dodaj error handling
+		const updatedAt = timestamp.fromDate(new Date());
+		await ref.doc(id).update({ ...doc, updatedAt });
+
+		dispatchIfNotCancelled({
+			type: "UPDATED_DOCUMENT",
+			payload: doc,
+		});
+	};
+
 	// add a document
 	const addDocument = async doc => {
 		dispatch({ type: "IS_PENDING" });
@@ -64,10 +86,13 @@ export const useFirestore = collection => {
 		try {
 			const createdAt = timestamp.fromDate(new Date());
 			const addedDocument = await ref.add({ ...doc, createdAt });
+
 			dispatchIfNotCancelled({
 				type: "ADDED_DOCUMENT",
 				payload: addedDocument,
 			});
+
+			return addedDocument.id;
 		} catch (err) {
 			dispatchIfNotCancelled({ type: "ERROR", payload: err.message });
 		}
@@ -95,5 +120,5 @@ export const useFirestore = collection => {
 		return () => setIsCancelled(true);
 	}, []);
 
-	return { addDocument, deleteDocument, response };
+	return { addDocument, deleteDocument, updateDocument, response };
 };
