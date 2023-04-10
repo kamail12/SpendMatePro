@@ -3,15 +3,18 @@ import "firebase/firestore";
 import "firebase/auth";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyDsu8AEKxngoi-w6UCgqn4jIfnCGZSU19w",
-	authDomain: "spendmatepro.firebaseapp.com",
-	projectId: "spendmatepro",
-	storageBucket: "spendmatepro.appspot.com",
-	messagingSenderId: "998136951162",
-	appId: "1:998136951162:web:60858b224d3779e56a26c3",
+	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+	projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+	storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+	messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+	appId: process.env.REACT_APP_FIREBASE_APP_ID,
 };
 
-//initialization firebase
+if (!process.env.REACT_APP_FIREBASE_API_KEY) {
+	throw new Error("API KEY IS MISSING!");
+}
+
 firebase.initializeApp(firebaseConfig);
 
 //initialization services
@@ -19,6 +22,6 @@ const projectFirestore = firebase.firestore();
 const projectAuth = firebase.auth();
 
 //timestamp
-const timestamp = firebase.firestore.Timestamp
+const timestamp = firebase.firestore.Timestamp;
 
 export { projectFirestore, projectAuth, timestamp };
