@@ -9,8 +9,7 @@ export default function TransferMoneyToGoal({ onTransfer }) {
 	const handleSubmit = e => {
 		e.preventDefault();
 
-		onTransfer({ transferMoney });
-
+		onTransfer(parseFloat(transferMoney));
 		setTransferMoney(0);
 	};
 
