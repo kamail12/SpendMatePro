@@ -1,116 +1,88 @@
 import { useAuthContext } from "../../hooks/useAuthContext";
-import { useCollection } from "../../hooks/useCollection";
-import { useFirestore } from "../../hooks/useFirestore";
-
-// styles
-import styles from "./Home.module.css";
+import { useGoal } from "../../hooks/useGoal";
+import { useTransactions, TRANSACTION_TYPE } from "../../hooks/useTransactions";
 
 // components
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
-
 import TransactionGoalsForm from "../../components/TransactionGoalsForm";
 
-//try use
+// styles
+import styles from "./Home.module.css";
+
 export default function Home() {
-	const { addDocument: addTransaction, deleteDocument: deleteTransaction } =
-		useFirestore("transactions");
-	const { updateDocument: updateGoal } = useFirestore("goals");
-
 	const { user } = useAuthContext();
-	const { documents, error } = useCollection(
-		"transactions",
-		["uid", "==", user.uid],
-		["createdAt", "desc"]
-	);
 
-	// // Goals
-	const { documents: goalsDocuments } = useCollection(
-		"goals",
-		["uid", "==", user.uid],
-		["createdAt", "desc"]
-	);
+	// Retrieve calculated transactions
+	const { update: updateGoal, active } = useGoal(user.uid);
 
-	const income = documents
-		.filter(document => document.type === "income")
-		.map(document => parseFloat(document.amount))
-		.reduce((prev, curr) => prev + curr, 0);
+	const {
+		create: createTransaction,
+		remove: removeTransaction,
+		error: transactionError,
+		transactions,
+		incomes,
+		expenses,
+		transfers,
+		goals,
+		sum,
+	} = useTransactions(user.uid);
 
-	const expense = documents
-		.filter(
-			document =>
-				document.type === "expense" || document.type === "transfer"
-		)
-		.map(document => parseFloat(document.amount))
-		.reduce((prev, curr) => prev + curr, 0);
-
-	const currentGoal = documents
-		.filter(document => document.type === "goal")
-		.map(document => parseFloat(document.amount))
-		.reduce((prev, curr) => prev + curr, 0);
-
-	const transfers = documents.filter(document => document.type === "goal");
-
-	// filter goalsDocuments for active set to true
-	const goals = goalsDocuments.filter(goalsDocument => goalsDocument.active);
-	const balance = income - expense - currentGoal;
+	// Calculated sum of amounts
+	const incomeSum = sum(incomes, i => parseFloat(i.amount));
+	const expenseSum = sum(expenses, i => parseFloat(i.amount));
+	const transferSum = sum(transfers, i => parseFloat(i.amount));
+	const goalSum = sum(goals, i => parseFloat(i.amount));
+	const balance = incomeSum - expenseSum - transferSum - goalSum;
 
 	//goal trans
 	const handleGoalTrasfer = async money => {
 		// 1. sprawdzenie czy money <= balance
-		if (goals.length === 0) return;
-		if (balance < money) return;
+		if ((balance < money) || !active) return;
 
 		const transaction = {
 			uid: user.uid,
-			name: goals[0].title,
+			name: active.title,
 			amount: money,
-			type: "goal",
+			type: TRANSACTION_TYPE.GOAL,
 		};
 
 		// 2. dodajesz do transactions dokument o typie 'goal' (addDocument o typie 'goal')
-		const id = await addTransaction(transaction);
-		transfers.push({ id, ...transaction });
+		const id = await createTransaction(transaction);
+		goals.push({ id, ...transaction });
 
 		// 3. jesli goal amount (goals[0].amount) zsumowany z obecnym money jest wyzszy od goal amount
 		//to wywolujesz metode await closeGoal()
-		if (currentGoal + money >= goals[0].amount) {
-			await closeGoal();
-		}
+		if (goalSum + money >= active.amount) await closeGoal();
 	};
 
 	const closeGoal = async () => {
 		// Update documentu obecnego goala (goals[0]) i zmiana statusu active na false
-		// transfers.forEach(transaction => deleteTransaction(transaction.id));
-		const deduction = transfers
-			.map(({ amount }) => amount)
-			.reduce((prev, curr) => prev + curr, 0);
+
+		const transaction = {
+			uid: user.uid,
+			name: `Goal Completed: ${active.title}`,
+			amount: sum(goals, (i) => parseFloat(i.amount)),
+			type: TRANSACTION_TYPE.TRANSFER,
+		};
 
 		await Promise.all(
-			...transfers.map(transaction => deleteTransaction(transaction.id)),
-			updateGoal(goals[0].id, {
-				active: false,
-				transactions: transfers,
-			}),
-			addTransaction({
-				uid: user.uid,
-				name: `Goal Completed: ${goals[0].title}`,
-				amount: deduction,
-				type: "transfer",
-			})
+			goals.map(transaction => removeTransaction(transaction.id)),
+			updateGoal(active.id, { active: false, transactions: goals }),
+			createTransaction(transaction)
 		);
 	};
 
 	return (
 		<div className={styles.container}>
 			<div className={styles.content}>
-				{error && <p>{error}</p>}
-				{documents && (
+				{transactionError && <p>{transactionError}</p>}
+				{transactions && (
 					<TransactionList
 						balance={balance}
-						transactions={documents}
-						goal={goals[0]}
-						currentGoal={currentGoal}
+						transactions={transactions}
+						goal={active}
+						currentGoal={goalSum}
 					/>
 				)}
 			</div>
@@ -119,7 +91,7 @@ export default function Home() {
 				<TransactionForm uid={user.uid} balance={balance} />
 				<TransactionGoalsForm
 					uid={user.uid}
-					goal={goals[0]}
+					goal={active}
 					onTransfer={handleGoalTrasfer}
 				/>
 			</div>
