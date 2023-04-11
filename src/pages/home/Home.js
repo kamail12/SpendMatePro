@@ -81,8 +81,6 @@ export default function Home() {
 
 	const closeGoal = async () => {
 		// Update documentu obecnego goala (goals[0]) i zmiana statusu active na false
-		// W momencie closeGoal przenosimy wszystkie transakcje z kolekcji transactions o typie 'goal' do kolekcji archives
-
 		// transfers.forEach(transaction => deleteTransaction(transaction.id));
 		const deduction = transfers
 			.map(({ amount }) => amount)
@@ -96,7 +94,7 @@ export default function Home() {
 			}),
 			addTransaction({
 				uid: user.uid,
-				name: goals[0].title,
+				name: `Goal Completed: ${goals[0].title}`,
 				amount: deduction,
 				type: "transfer",
 			})
