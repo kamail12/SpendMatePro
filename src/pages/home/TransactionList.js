@@ -12,7 +12,19 @@ export default function TransactionList({
 }) {
 	const { deleteDocument } = useFirestore("transactions");
 	const color = transaction => {
-		return transaction.type === "income" ? styles.income : styles.expense;
+		if (transaction.type === "goal") {
+			// Styl goal
+			return styles.goal;
+		} else if (transaction.type === "income") {
+			//Styl income
+			return styles.income;
+		} else if (transaction.type === "expense") {
+			//Styl expense
+			return styles.expense;
+		} else {
+			// Styl na zakończonomy celu
+			return styles.finished;
+		}
 	};
 
 	const isNegative = balance < 0 && styles.alert;

@@ -1,3 +1,11 @@
-.pie{
-    width: 200px;
+.pie {
+	width: 150px;
+	position: relative;
+}
+
+.percentage p {
+	color: gold;
+	position: absolute;
+	margin: 40%;
+	top: 1%;
 }
