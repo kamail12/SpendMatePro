@@ -2,7 +2,7 @@ import { useCollection } from './useCollection';
 import { useFirestore } from './useFirestore';
 import { useFilter } from './useFilter';
 
-const TRANSACTION_TYPE = {
+export const TRANSACTION_TYPE = {
     INCOME: 'income',
     EXPENSE: 'expense',
     TRANSFER: 'transfer',
