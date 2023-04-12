@@ -1,22 +1,70 @@
+.wrapper {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .login-form {
-	max-width: 360px;
-	margin: 60px auto;
-	padding: 20px;
+	margin: 20px 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px;
+	width: 350px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 2px var(--shadow-color);
+	background: var(--white-color);
 }
 
-.login-form label {
-	display: block;
-	margin: 30px auto;
-}
-
-.login-form span {
-	display: block;
-	margin-bottom: 6px;
+.login-form .heading {
+	margin-bottom: 40px;
 }
 
 .login-form input {
-	padding: 8px -6px;
-	font-size: 1em;
-	color: #777;
+	padding: var(--default-padding);
+	display: block;
+	font-size: var(--font-size-2x);
+	color: var(--primary-color);
+	border-left: 0;
+	border-top: 0;
+	border-right: 0;
+	border-bottom: 1px solid;
+	border-color: var(--shadow-color);
+	width: 300px;
+}
+
+.login-form .submit {
+	margin-top: 20px;
+	border: none;
+	font-size: var(--font-size-2x);
+	font-weight: bold;
+	padding: var(--default-padding);
+	color: var(--primary-color);
+	background: var(--linear-white);
+	cursor: pointer;
 	width: 100%;
+}
+
+.login-form .submit .arrow {
+	color: var(--accent-color);
+}
+
+.login-form input:-webkit-autofill,
+.login-form input:-webkit-autofill:hover, 
+.login-form input:-webkit-autofill:focus, 
+.login-form input:-webkit-autofill:active{
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+.signup {
+	text-decoration: none;
+	color: var(--accent-color);
+	cursor: pointer;
+}
+
+.error {
+	background: var(--linear-white);
+	padding: var(--default-padding);
 }

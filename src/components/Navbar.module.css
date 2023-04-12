@@ -1,36 +1,38 @@
 .navbar {
-	width: 100%;
-	background: rgba(172, 255, 47, 0.544);
-	padding: 20px 10px;
-	box-sizing: border-box;
+	background: var(--white-color);
+	padding: var(--default-padding);
+	box-shadow: 1px 1px 2px var(--shadow-color);
+	display: flex;
+	justify-content: space-between;
+}
+
+.navbar .logo {
+	object-fit: cover;
+	width: 200px;
+	margin-right: auto;
 }
 
 .navbar ul {
 	display: flex;
-	margin: 0 auto;
-	max-width: 960px;
 	align-items: center;
+	margin-right: var(--default-margin);
 }
 
-.title {
-	margin-right: auto;
-	font-weight: bold;
-	letter-spacing: 1px;
-	font-size: 1.2em;
-}
-
-.imgLogo {
-	object-fit: cover;
-	width: 25%;
-	margin-right: auto;
+.navbar .register {
+	border-radius: 5px;
+	background: rgb(255,156,0);
+	background: linear-gradient(169deg, rgba(255,156,0,1) 0%, rgba(255,169,0,1) 38%, rgba(255,138,0,1) 89%, rgba(255,91,0,1) 100%);
+	box-shadow: 1px 1px 2px var(--shadow-color);
+	color: var(--white-color);
+	margin-left: var(--default-padding);
+	padding: 5px var(--default-padding);
 }
 
 .navbar button {
-	margin-left: 15px;
+	margin-left: var(--default-margin);
 }
 
 .navbar a {
-	margin-left: 15px;
-	color: #333;
+	color: inherit;
 	text-decoration: none;
 }

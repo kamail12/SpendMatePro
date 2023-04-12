@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 import { useSignup } from "../../hooks/useSignup";
 
 //Styles
@@ -18,48 +19,40 @@ export default function Signup() {
 	};
 
 	return (
+		<div className={styles.wrapper}>
 		<form onSubmit={handleSubmit} className={styles["signup-form"]}>
-			<h2>Signup</h2>
-			<label>
-				<span>Email:</span>
+		<h2 className={` ${styles.heading} underline`}>Create your awesome account</h2>
 				<input
 					type="email"
 					onChange={e => setEmail(e.target.value)}
 					value={email}
+					placeholder="Email"
 				/>
-			</label>
-			<label>
-				<span>Password:</span>
 				<input
 					type="password"
 					onChange={e => setPassword(e.target.value)}
 					value={password}
+					placeholder="Password"
 				/>
-			</label>
-			<label>
-				<span>Name:</span>
+
 				<input
 					type="text"
 					onChange={e => setDisplayName(e.target.value)}
 					value={displayName}
+					placeholder="Display name"
 				/>
-			</label>
-			<label>
-				<span>Monthly Income:</span>
 				<input
 					type="number"
 					min="0"
 					onChange={e => setIncome(e.target.value)}
 					value={income}
+					placeholder="Your income"
 				/>
-			</label>
-			{!isPending && <button className="btn">Signup</button>}
-			{isPending && (
-				<button className="btn" disabled>
-					Loading...
-				</button>
-			)}
-			{error && <p>{error}</p>}
+			{!isPending && <button className={`${styles.submit} underline-animation`}>Register</button>}
+			{isPending && <button disabled className={`${styles.submit}`}>Loading...</button>}
+			{error && <p className={styles.error}>{error}</p>}
 		</form>
+		<div>Already have an account? <Link to={'/login'} className={`${styles.signup} underline-animation`}>Login here!</Link></div>
+	</div>
 	);
 }

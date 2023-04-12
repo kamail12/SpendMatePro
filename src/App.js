@@ -6,11 +6,6 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Signup from "./pages/signup/Signup";
 
-//try using collect
-
-//Components
-import Navbar from "./components/Navbar";
-
 function App() {
 	const { authIsReady, user } = useAuthContext();
 
@@ -19,8 +14,6 @@ function App() {
 		<div className="App">
 			{authIsReady && (
 				<BrowserRouter>
-
-					<Navbar />
 					<Switch>
 						<Route exact path="/">
 							{!user && <Redirect to="/login" />}

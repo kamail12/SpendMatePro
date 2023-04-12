@@ -12,15 +12,15 @@ export default function Navbar() {
 
 	return (
 		<nav className={styles.navbar}>
+			<img src={logo} alt="logo" className={styles.logo} />
 			<ul>
-				<img src={logo} alt="logo" className={styles.imgLogo} />
 
 				{!user && (
 					<>
-						<li>
+						<li className={'underline-animation'}>
 							<Link to="/login">Login</Link>
 						</li>
-						<li>
+						<li className={styles.register}>
 							<Link to="/signup">Signup</Link>
 						</li>
 					</>

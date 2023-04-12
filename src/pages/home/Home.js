@@ -5,7 +5,9 @@ import { useTransactions, TRANSACTION_TYPE } from "../../hooks/useTransactions";
 // components
 import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
+
 import TransactionGoalsForm from "../../components/TransactionGoalsForm";
+import Navbar from '../../components/Navbar';
 
 // styles
 import styles from "./Home.module.css";
@@ -74,6 +76,8 @@ export default function Home() {
 	};
 
 	return (
+		<>
+		<Navbar />
 		<div className={styles.container}>
 			<div className={styles.content}>
 				{transactionError && <p>{transactionError}</p>}
@@ -96,5 +100,6 @@ export default function Home() {
 				/>
 			</div>
 		</div>
+		</>
 	);
 }
