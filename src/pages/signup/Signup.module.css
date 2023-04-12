@@ -18,6 +18,12 @@
 	background: var(--white-color);
 }
 
+@media (min-width: 600px) {
+	.signup-form {
+		width: 500px;
+	}
+}
+
 .signup-form .heading {
 	margin-bottom: 40px;
 }
@@ -44,7 +50,7 @@
 	color: var(--primary-color);
 	background: var(--linear-white);
 	cursor: pointer;
-	width: 100%;
+	width: 300px;
 }
 
 .signup-form .submit .arrow {

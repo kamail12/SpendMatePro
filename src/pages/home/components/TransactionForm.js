@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useFirestore } from "../../hooks/useFirestore";
+import { useFirestore } from "../../../hooks/useFirestore";
 
 export default function TransactionForm({ uid, balance }) {
 	const [name, setName] = useState("");

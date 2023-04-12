@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 //styles
-import styles from "./Home.module.css";
+import styles from "../Home.module.css";
 
 export default function GoalForm({ onAdd }) {
 	const [goalTitle, setGoalTitle] = useState("");

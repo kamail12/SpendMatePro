@@ -1,6 +1,6 @@
-import { useFirestore } from "../hooks/useFirestore";
-import GoalForm from "../pages/home/GoalForm";
-import TransferMoneyToGoal from "../pages/home/TransferMoneyToGoal";
+import { useFirestore } from "../../../hooks/useFirestore";
+import TransferMoneyToGoal from "./TransferMoneyToGoal";
+import GoalForm from "./GoalForm";
 
 export default function TransactionGoalsForm({ uid, goal, onTransfer }) {
 	const { addDocument } = useFirestore("goals");

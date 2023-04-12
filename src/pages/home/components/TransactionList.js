@@ -1,6 +1,6 @@
-import styles from "./Home.module.css";
-import { useFirestore } from "../../hooks/useFirestore";
-import Goal from "../../components/Goal";
+import { useFirestore } from "../../../hooks/useFirestore";
+import Goal from "../../../components/Goal";
+import styles from "../Home.module.css";
 
 //try use collcet
 

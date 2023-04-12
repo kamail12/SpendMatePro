@@ -3,11 +3,10 @@ import { useGoal } from "../../hooks/useGoal";
 import { useTransactions, TRANSACTION_TYPE } from "../../hooks/useTransactions";
 
 // components
-import TransactionForm from "./TransactionForm";
-import TransactionList from "./TransactionList";
-
-import TransactionGoalsForm from "../../components/TransactionGoalsForm";
 import Navbar from '../../components/Navbar';
+import TransactionForm from "./components/TransactionForm";
+import TransactionList from "./components/TransactionList";
+import TransactionGoalsForm from "./components/TransactionGoalsForm";
 
 // styles
 import styles from "./Home.module.css";
