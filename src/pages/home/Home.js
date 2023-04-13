@@ -10,6 +10,9 @@ import TransactionGoalsForm from "./components/TransactionGoalsForm";
 
 // styles
 import styles from "./Home.module.css";
+import { Item } from "./components/Item";
+import { Details } from "./components/Details";
+import { Transactions } from "./components/Transactions";
 
 export default function Home() {
 	const { user } = useAuthContext();
@@ -78,7 +81,11 @@ export default function Home() {
 		<>
 		<Navbar />
 		<div className={styles.container}>
-			<div className={styles.content}>
+			<main>
+				<Details balance={balance} goal={active} current={goalSum} />
+				<Transactions transactions={transactions} />
+			</main>
+			{/* <div className={styles.content}>
 				{transactionError && <p>{transactionError}</p>}
 				{transactions && (
 					<TransactionList
@@ -88,15 +95,21 @@ export default function Home() {
 						currentGoal={goalSum}
 					/>
 				)}
-			</div>
+			</div> */}
 
 			<div className={styles.sidebar}>
-				<TransactionForm uid={user.uid} balance={balance} />
+				<Item.Button title={'New Expense'} description={'Add new expense to the list'} onClick={() => {}} />
+				<Item.Button title={'New Income'} description={'Add new income to the list'} onClick={() => {}}/>
+
+				<Item title={'Upcoming Payments'} />
+				<Item title={'Remainders'} />
+
+				{/* <TransactionForm uid={user.uid} balance={balance} />
 				<TransactionGoalsForm
 					uid={user.uid}
 					goal={active}
 					onTransfer={handleGoalTrasfer}
-				/>
+				/> */}
 			</div>
 		</div>
 		</>

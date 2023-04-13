@@ -1,5 +1,5 @@
 .navbar {
-	background: var(--white-color);
+	background: var(--light-color);
 	padding: var(--default-padding);
 	box-shadow: 1px 1px 2px var(--shadow-color);
 	display: flex;
@@ -23,13 +23,12 @@
 	background: rgb(255,156,0);
 	background: linear-gradient(169deg, rgba(255,156,0,1) 0%, rgba(255,169,0,1) 38%, rgba(255,138,0,1) 89%, rgba(255,91,0,1) 100%);
 	box-shadow: 1px 1px 2px var(--shadow-color);
-	color: var(--white-color);
+	color: var(--light-color);
 	margin-left: var(--default-padding);
 	padding: 5px var(--default-padding);
-}
-
-.navbar button {
-	margin-left: var(--default-margin);
+	text-decoration: none;
+	border: none;
+	cursor: pointer;
 }
 
 .navbar a {

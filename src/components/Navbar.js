@@ -30,7 +30,7 @@ export default function Navbar() {
 					<>
 						<li>Hello, {user.displayName} </li>
 						<li>
-							<button className="btn" onClick={logout}>
+							<button className={styles.register} onClick={logout}>
 								Logout
 							</button>
 						</li>

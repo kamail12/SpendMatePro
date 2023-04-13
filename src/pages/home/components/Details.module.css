@@ -1,0 +1,123 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    background-repeat: no-repeat;
+    background-position: left;
+}
+
+.circle {
+    display: block;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: var(--linear-color);
+    box-shadow: 1px 1px 2px var(--shadow-color);
+}
+
+.circle .balance {
+    text-align: center;
+    color: var(--light-color);
+    position: relative;
+    top: -30px;
+}
+
+.circle .balance h2 {
+    font-size: 40px;
+    margin-bottom: -10px;
+    letter-spacing: 1px;
+}
+
+.goal {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 200px;
+    background: var(--linear-white);
+    width: 150px;
+    height: 150px;
+}
+
+.expense, .income {
+    display: none;
+}
+
+.details {
+	color: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+	position: absolute;
+    text-align: center;
+}
+
+.details span {
+    font-size: var(--font-size-4x);
+}
+
+.details h2 {
+    font-size: var(--font-size-2x);
+    margin-bottom: -5px;
+    padding: 0;
+}
+
+@media (max-width: 600px) {
+    .circle {
+        margin-left: -20px;
+        width: 250px;
+        height: 250px;
+    }
+
+    .goal {
+        top: -20px;
+        width: 125px;
+        height: 125px;
+        left: 175px;
+    }
+
+    .expense {
+        position: relative;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -10px;
+        left: 200px;
+        color: var(--primary-color);
+        background: var(--linear-white);
+        width: 100px;
+        height: 100px;
+        transition: ease 0.5s;
+        transform: scale(1);
+    }
+
+    .expense:hover {
+        transition: ease 0.5s;
+        transform: scale(1.2);
+    }
+
+    .income {
+        font-weight: bold;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        top: -100px;
+        left: 15px;
+        color: var(--primary-color);
+        background: var(--linear-white);
+        width: 100px;
+        height: 100px;
+        transition: ease 0.5s;
+        transform: scale(1);
+    }
+
+    .income:hover {
+        transition: ease 0.5s;
+        transform: scale(1.2);
+    }
+}

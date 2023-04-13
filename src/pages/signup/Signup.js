@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useSignup } from "../../hooks/useSignup";
 
 //Styles
 import styles from "./Signup.module.css";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function Signup() {
+	const { user } = useAuthContext();
+	const history = useHistory();
+	if (user) history.replace('/home');
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [displayName, setDisplayName] = useState("");

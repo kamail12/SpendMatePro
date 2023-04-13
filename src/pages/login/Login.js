@@ -1,12 +1,17 @@
 import { useState } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { useLogin } from "../../hooks/useLogin";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 // styles
 import styles from "./Login.module.css";
 
 export default function Login() {
+	const { user } = useAuthContext();
+	const history = useHistory();
+	if (user) history.replace('/home');
+
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const { login, error, isPending } = useLogin();
