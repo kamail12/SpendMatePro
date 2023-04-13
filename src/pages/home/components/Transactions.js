@@ -1,51 +1,47 @@
+import { useTransactionTypeIcon } from '../../../hooks/useTransactionTypeIcon';
+import { useFormattedDate } from '../../../hooks/useFormattedDate';
 import { TRANSACTION_TYPE } from '../../../hooks/useTransactions';
 
 import styles from './Transactions.module.css';
 
-export const Transactions = ({ transactions = [] }) => {
-	// const [filter, setFilter] = useState();
-    // const [filteredItems, setFilteredItems] = useState(transactions);
-
+export const Transactions = ({ limit = 10, loading, error, transactions = [] }) => {
     return <div className={styles.container}>
-        <h2 className={`${styles.list}`}><span className={'underline'}>Last Transactions</span> <span className={`${styles.more} underline-animation`}>Show more</span></h2>
+        <h2 className={`${styles.list}`}>
+            <span className={'underline'}>Last Transactions</span>
+            <span className={`${styles.more} underline-animation`}>Show more</span>
+        </h2>
+
         <div className={styles.items}>
-            <TransactionItem title={'Example Transaction'} amount={100} date={Date.now()} type={TRANSACTION_TYPE.EXPENSE} />
-            <TransactionItem title={'Example Transaction'} amount={100} date={Date.now()} type={TRANSACTION_TYPE.INCOME} />
-            <TransactionItem title={'Example Transaction'} amount={100} date={Date.now()} type={TRANSACTION_TYPE.EXPENSE} />
-            <TransactionItem title={'Example Transaction'} amount={100} date={Date.now()} type={TRANSACTION_TYPE.GOAL} />
-            <TransactionItem title={'Example Transaction'} amount={100} date={Date.now()} />
+            { error && <p>{ error }</p> }
+            { loading && <TransactionItem.Ghost count={limit} /> }
+            { !loading && transactions.slice(0, limit).map(({ amount, name, type, createdAt }, index) => {
+                return <TransactionItem key={index} title={name} amount={parseFloat(amount)} date={createdAt} type={type} />;
+            })}
         </div>
     </div>;
 }
 
-const useTransactionTypeIcon = (type = TRANSACTION_TYPE.EXPENSE) => {
-    const style = (color) => ({ fontSize: 'var(--font-size-3x)', color: `var(--${color})` });
-
-    switch(type) {
-        case TRANSACTION_TYPE.INCOME:
-            return <span style={style('success-color')}>→</span>;
-        case TRANSACTION_TYPE.GOAL:
-            return <span style={style('primary-color')}>→</span>;
-        case TRANSACTION_TYPE.TRANSFER:
-            return <span style={style('primary-color')}>→</span>;
-        default:
-            return <span style={style('accent-color')}>←</span>;
-    }
-}
-
 const TransactionItem = ({ title, date, amount, type = TRANSACTION_TYPE.EXPENSE }) => {
+    const formattedDate = useFormattedDate(date);
     const icon = useTransactionTypeIcon(type);
-    const formattedDate = (new Date(date)).toLocaleDateString('pl-PL', { hour: '2-digit', minute: '2-digit' });
 
     return <div className={`${styles.item} underline-animation`}>
         <div className={styles.heading}>
             { icon }
-            <div>
+            <section>
                 <h2>{ title }</h2>
                 <span>{ formattedDate }</span>
-            </div>
+            </section>
         </div>
 
-        <div className={styles.details}><span className={styles.currency}>$</span>{ amount }</div>
+        <div className={styles.details}>
+            <span className={styles.currency}>$</span>
+            { amount }
+        </div>
     </div>;
+}
+
+TransactionItem.Ghost = ({ count = 5 }) => {
+    const repeats = Array.from(Array(count).keys());
+    return repeats.map((key) => <TransactionItem key={key} type={null} />);
 }

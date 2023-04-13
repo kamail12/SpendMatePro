@@ -53,10 +53,6 @@
 	width: 300px;
 }
 
-.login-form .submit .arrow {
-	color: var(--accent-color);
-}
-
 .login-form input:-webkit-autofill,
 .login-form input:-webkit-autofill:hover, 
 .login-form input:-webkit-autofill:focus, 

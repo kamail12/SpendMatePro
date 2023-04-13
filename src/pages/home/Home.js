@@ -1,29 +1,39 @@
+import { useState } from "react";
+
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { useGoal } from "../../hooks/useGoal";
 import { useTransactions, TRANSACTION_TYPE } from "../../hooks/useTransactions";
 
 // components
 import Navbar from '../../components/Navbar';
-import TransactionForm from "./components/TransactionForm";
-import TransactionList from "./components/TransactionList";
-import TransactionGoalsForm from "./components/TransactionGoalsForm";
-
-// styles
-import styles from "./Home.module.css";
 import { Item } from "./components/Item";
 import { Details } from "./components/Details";
 import { Transactions } from "./components/Transactions";
+import { Modal } from "../../components/Modal";
+
+// styles
+import styles from "./Home.module.css";
+import { ExpenseModal } from "./modals/ExpenseModal";
+import { IncomeModal } from "./modals/IncomeModal";
+import { GoalModal } from "./modals/GoalModal";
+import { TransferModal } from "./modals/TransferModal";
 
 export default function Home() {
 	const { user } = useAuthContext();
+	const [modal, setModal] = useState();
 
 	// Retrieve calculated transactions
-	const { update: updateGoal, active } = useGoal(user.uid);
+	const {
+		update: updateGoal,
+		create: createGoal,
+		active
+	} = useGoal(user.uid);
 
 	const {
 		create: createTransaction,
 		remove: removeTransaction,
 		error: transactionError,
+		isLoading: transactionsLoading,
 		transactions,
 		incomes,
 		expenses,
@@ -39,30 +49,7 @@ export default function Home() {
 	const goalSum = sum(goals, i => parseFloat(i.amount));
 	const balance = incomeSum - expenseSum - transferSum - goalSum;
 
-	//goal trans
-	const handleGoalTrasfer = async money => {
-		// 1. sprawdzenie czy money <= balance
-		if ((balance < money) || !active) return;
-
-		const transaction = {
-			uid: user.uid,
-			name: active.title,
-			amount: money,
-			type: TRANSACTION_TYPE.GOAL,
-		};
-
-		// 2. dodajesz do transactions dokument o typie 'goal' (addDocument o typie 'goal')
-		const id = await createTransaction(transaction);
-		goals.push({ id, ...transaction });
-
-		// 3. jesli goal amount (goals[0].amount) zsumowany z obecnym money jest wyzszy od goal amount
-		//to wywolujesz metode await closeGoal()
-		if (goalSum + money >= active.amount) await closeGoal();
-	};
-
 	const closeGoal = async () => {
-		// Update documentu obecnego goala (goals[0]) i zmiana statusu active na false
-
 		const transaction = {
 			uid: user.uid,
 			name: `Goal Completed: ${active.title}`,
@@ -77,41 +64,99 @@ export default function Home() {
 		);
 	};
 
+	const handleOpenExpenseModal = () => {
+		setModal({
+			isDissmisible: true,
+			element: <ExpenseModal balance={balance} onClose={() => setModal(null)} onSubmit={async ({ title, amount }) => {
+				const id = await createTransaction({
+					uid: user.uid,
+					name: title,
+					amount: amount,
+					type: TRANSACTION_TYPE.EXPENSE,
+				});
+
+				// We have an id so we can close modal (success case)
+				if (id) return setModal(null);
+			}} />
+		});
+	}
+
+	const handleOpenIncomeModal = () => {
+		setModal({
+			isDissmisible: true,
+			element: <IncomeModal onClose={() => setModal(null)} onSubmit={async ({ title, amount }) => {
+				const id = await createTransaction({
+					uid: user.uid,
+					name: title,
+					amount: amount,
+					type: TRANSACTION_TYPE.INCOME,
+				});
+
+				// We have an id so we can close modal (success case)
+				if (id) return setModal(null);
+			}} />
+		});
+	}
+
+	const handleOpenTransferModal = () => {
+		setModal({
+			isDissmisible: true,
+			element: <TransferModal balance={balance} onClose={() => setModal(null)} onSubmit={async ({ amount }) => {
+				const transaction = { uid: user.uid, name: active.title, amount, type: TRANSACTION_TYPE.GOAL };
+				const id = await createTransaction(transaction);
+				if (!id) return;
+
+				goals.push({ id, ...transaction });
+				if (goalSum + amount >= active.amount) await closeGoal();
+
+				return setModal(null);
+			}} />
+		});
+	}
+
+	const handleOpenGoalModal = () => {
+		setModal({
+			isDissmisible: true,
+			element: <GoalModal onClose={() => setModal(null)} onSubmit={async ({ title, amount }) => {
+				await createGoal({ uid: user.uid, title, amount });
+				return setModal(null);
+			}} />
+		});
+	}
+
 	return (
 		<>
 		<Navbar />
 		<div className={styles.container}>
 			<main>
-				<Details balance={balance} goal={active} current={goalSum} />
-				<Transactions transactions={transactions} />
+				<Details
+					balance={balance}
+					goal={active}
+					current={goalSum}
+					onGoalClick={active ? handleOpenTransferModal : handleOpenGoalModal}
+					onAddExpenseClick={handleOpenExpenseModal}
+					onAddIncomeClick={handleOpenIncomeModal}
+				/>
+				<Transactions
+					limit={5}
+					loading={transactionsLoading}
+					error={transactionError}
+					transactions={transactions}
+				/>
 			</main>
-			{/* <div className={styles.content}>
-				{transactionError && <p>{transactionError}</p>}
-				{transactions && (
-					<TransactionList
-						balance={balance}
-						transactions={transactions}
-						goal={active}
-						currentGoal={goalSum}
-					/>
-				)}
-			</div> */}
 
-			<div className={styles.sidebar}>
-				<Item.Button title={'New Expense'} description={'Add new expense to the list'} onClick={() => {}} />
-				<Item.Button title={'New Income'} description={'Add new income to the list'} onClick={() => {}}/>
+			<aside className={styles.sidebar}>
+				<Item.Button title={'New Expense'} description={'Add new expense to the list'} onClick={handleOpenExpenseModal} />
+				<Item.Button title={'New Income'} description={'Add new income to the list'} onClick={handleOpenIncomeModal}/>
+				{ active && <Item.Button title={'Transfer to Goal'} description={'Transfer money to goal'} onClick={handleOpenTransferModal}/> }
+				{ !active && <Item.Button title={'Create Goal'} description={'Create new goal'} onClick={handleOpenGoalModal}/> }
 
 				<Item title={'Upcoming Payments'} />
 				<Item title={'Remainders'} />
-
-				{/* <TransactionForm uid={user.uid} balance={balance} />
-				<TransactionGoalsForm
-					uid={user.uid}
-					goal={active}
-					onTransfer={handleGoalTrasfer}
-				/> */}
-			</div>
+			</aside>
 		</div>
+		
+		{ modal && <Modal onOutsideClick={() => modal.isDissmisible && setModal(null)}>{ modal.element }</Modal> }
 		</>
 	);
 }

@@ -11,6 +11,10 @@
     margin-bottom: var(--default-padding);
 }
 
+.container .heading {
+    margin-bottom: -10px;
+}
+
 .container span {
     font-size: var(--font-size-1x);
 }
