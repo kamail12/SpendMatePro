@@ -64,7 +64,10 @@ export default function Home() {
 		);
 	};
 
-	const handleOpenExpenseModal = () => {
+	const handleOpenExpenseModal = (e) => {
+		e.stopPropagation();
+		window.scrollTo({ top: 0 });
+
 		setModal({
 			isDissmisible: true,
 			element: <ExpenseModal balance={balance} onClose={() => setModal(null)} onSubmit={async ({ title, amount }) => {
@@ -81,7 +84,10 @@ export default function Home() {
 		});
 	}
 
-	const handleOpenIncomeModal = () => {
+	const handleOpenIncomeModal = (e) => {
+		e.stopPropagation();
+		window.scrollTo({ top: 0 });
+
 		setModal({
 			isDissmisible: true,
 			element: <IncomeModal onClose={() => setModal(null)} onSubmit={async ({ title, amount }) => {
@@ -98,7 +104,10 @@ export default function Home() {
 		});
 	}
 
-	const handleOpenTransferModal = () => {
+	const handleOpenTransferModal = (e) => {
+		e.stopPropagation();
+		window.scrollTo({ top: 0 });
+
 		setModal({
 			isDissmisible: true,
 			element: <TransferModal balance={balance} onClose={() => setModal(null)} onSubmit={async ({ amount }) => {
@@ -114,7 +123,10 @@ export default function Home() {
 		});
 	}
 
-	const handleOpenGoalModal = () => {
+	const handleOpenGoalModal = (e) => {
+		e.stopPropagation();
+		window.scrollTo({ top: 0 });
+
 		setModal({
 			isDissmisible: true,
 			element: <GoalModal onClose={() => setModal(null)} onSubmit={async ({ title, amount }) => {
@@ -136,6 +148,7 @@ export default function Home() {
 					onGoalClick={active ? handleOpenTransferModal : handleOpenGoalModal}
 					onAddExpenseClick={handleOpenExpenseModal}
 					onAddIncomeClick={handleOpenIncomeModal}
+					onBalanceClick={() => {}}
 				/>
 				<Transactions
 					limit={5}
@@ -155,7 +168,6 @@ export default function Home() {
 				<Item title={'Remainders'} />
 			</aside>
 		</div>
-		
 		{ modal && <Modal onOutsideClick={() => modal.isDissmisible && setModal(null)}>{ modal.element }</Modal> }
 		</>
 	);
