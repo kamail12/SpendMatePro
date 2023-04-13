@@ -17,7 +17,7 @@
 		grid-template-columns: 1fr;
 	}
 
-	.aside {
+	aside {
 		display: none;
 	}
 }
