@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
 @import url('variables.css');
 
-/* base styles */
 * {
 	box-sizing: border-box;
 	margin: 0;
@@ -20,18 +19,4 @@ html, body {
 
 ul {
 	list-style-type: none;
-}
-.btn {
-	background: none;
-	border: 2px solid white;
-	padding: 6px 12px;
-	border-radius: 4px;
-	color: whitesmoke;
-	font-weight: bold;
-	cursor: pointer;
-	font-size: 1em;
-	transition: 0.2s ease-in;
-}
-.btn:hover {
-	scale: 1.1;
 }
