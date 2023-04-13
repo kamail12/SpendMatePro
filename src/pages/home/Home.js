@@ -52,7 +52,7 @@ export default function Home() {
 	const closeGoal = async () => {
 		const transaction = {
 			uid: user.uid,
-			name: `Goal Completed: ${active.title}`,
+			name: active.title,
 			amount: sum(goals, (i) => parseFloat(i.amount)),
 			type: TRANSACTION_TYPE.TRANSFER,
 		};
