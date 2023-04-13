@@ -1,9 +1,9 @@
 .container {
 	display: grid;
 	grid-template-columns: 2fr 1fr;
-	max-width: 1200px;
+	max-width: var(--max-width);
 	margin: 0 auto;
-	padding: 20px;
+	padding: var(--default-margin);
 }
 
 .sidebar {

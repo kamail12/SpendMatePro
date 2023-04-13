@@ -1,10 +1,10 @@
 import styles from "./Item.module.css";
 
-export const Item = ({ title }) => {
+export const Item = ({ title, children }) => {
     return <div className={styles.wrapper}>
         <div className={styles.container}>
             <h2 className={`${styles.heading}`}>{ title }</h2>
-            <span>Some content inside sidebar item</span>
+            { children }
         </div>
     </div>
 }

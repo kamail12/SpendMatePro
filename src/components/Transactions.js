@@ -1,14 +1,14 @@
-import { useTransactionTypeIcon } from '../../../hooks/useTransactionTypeIcon';
-import { useFormattedDate } from '../../../hooks/useFormattedDate';
-import { TRANSACTION_TYPE } from '../../../hooks/useTransactions';
+import { useTransactionTypeIcon } from '../hooks/useTransactionTypeIcon';
+import { useFormattedDate } from '../hooks/useFormattedDate';
+import { TRANSACTION_TYPE } from '../hooks/useTransactions';
 
 import styles from './Transactions.module.css';
 
-export const Transactions = ({ limit = 10, loading, error, transactions = [] }) => {
+export const Transactions = ({ title, limit = 10, loading, error, transactions = [], onShowMoreClick }) => {
     return <div className={styles.container}>
         <h2 className={`${styles.list}`}>
-            <span className={'underline'}>Last Transactions</span>
-            <span className={`${styles.more} underline-animation`}>Show more</span>
+            <span className={'underline'}>{ title }</span>
+            { onShowMoreClick && <span className={`${styles.more} underline-animation`} onClick={onShowMoreClick}>Show more</span> }
         </h2>
 
         <div className={styles.items}>
@@ -17,6 +17,7 @@ export const Transactions = ({ limit = 10, loading, error, transactions = [] }) 
             { !loading && transactions.slice(0, limit).map(({ amount, name, type, createdAt }, index) => {
                 return <TransactionItem key={index} title={name} amount={parseFloat(amount)} date={createdAt} type={type} />;
             })}
+            { transactions.length === 0 && <TransactionItem.Empty /> }
         </div>
     </div>;
 }
@@ -35,7 +36,7 @@ const TransactionItem = ({ title, date, amount, type = TRANSACTION_TYPE.EXPENSE 
         </div>
 
         <div className={styles.details}>
-            <span className={styles.currency}>$</span>
+            { amount && <span className={styles.currency}>$</span> }
             { amount }
         </div>
     </div>;
@@ -44,4 +45,8 @@ const TransactionItem = ({ title, date, amount, type = TRANSACTION_TYPE.EXPENSE 
 TransactionItem.Ghost = ({ count = 5 }) => {
     const repeats = Array.from(Array(count).keys());
     return repeats.map((key) => <TransactionItem key={key} type={null} />);
+}
+
+TransactionItem.Empty = () => {
+    return <TransactionItem type={null} />;
 }
