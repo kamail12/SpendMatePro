@@ -12,7 +12,7 @@ export const TRANSACTION_TYPE = {
 export const useTransactions = (userId) => {
     const { addDocument, deleteDocument } = useFirestore("transactions");
 
-	const { documents, error } = useCollection(
+	const { documents, error, isLoading } = useCollection(
 		"transactions",
 		["uid", "==", userId],
 		["createdAt", "desc"]
@@ -34,5 +34,5 @@ export const useTransactions = (userId) => {
         return addDocument({ uid, amount, name, type });
     }
 
-    return { transactions: documents, incomes, expenses, transfers, goals, sum, error, create, remove };
+    return { transactions: documents, incomes, expenses, transfers, goals, sum, error, create, remove, isLoading };
 }

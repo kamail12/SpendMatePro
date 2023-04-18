@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useLogout } from "../hooks/useLogout";
 import { useAuthContext } from "../hooks/useAuthContext";
 import logo from "../img/logo.svg";
@@ -7,20 +7,21 @@ import logo from "../img/logo.svg";
 import styles from "./Navbar.module.css";
 
 export default function Navbar() {
+	const history = useHistory();
 	const { logout } = useLogout();
 	const { user } = useAuthContext();
 
 	return (
 		<nav className={styles.navbar}>
+			<img onClick={() => history.replace('/')} src={logo} alt="logo" className={styles.logo} />
 			<ul>
-				<img src={logo} alt="logo" className={styles.imgLogo} />
 
 				{!user && (
 					<>
-						<li>
+						<li className={'underline-animation'}>
 							<Link to="/login">Login</Link>
 						</li>
-						<li>
+						<li className={styles.register}>
 							<Link to="/signup">Signup</Link>
 						</li>
 					</>
@@ -30,7 +31,7 @@ export default function Navbar() {
 					<>
 						<li>Hello, {user.displayName} </li>
 						<li>
-							<button className="btn" onClick={logout}>
+							<button className={styles.register} onClick={logout}>
 								Logout
 							</button>
 						</li>

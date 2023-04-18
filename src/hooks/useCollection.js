@@ -4,6 +4,7 @@ import { projectFirestore } from "../firebase/config";
 export const useCollection = (collection, _query, _orderBy) => {
 	const [documents, setDocuments] = useState([]);
 	const [error, setError] = useState(null);
+	const [isLoading, setIsLoading] = useState(true);
 
 	const query = useRef(_query).current;
 	const orderBy = useRef(_orderBy).current;
@@ -27,10 +28,12 @@ export const useCollection = (collection, _query, _orderBy) => {
 
 				// update state
 				setDocuments(results);
+				setIsLoading(false);
 			},
 			error => {
 				console.log(error);
 				setError("could not fetch the data");
+				setIsLoading(false);
 			}
 		);
 
@@ -38,5 +41,5 @@ export const useCollection = (collection, _query, _orderBy) => {
 		return () => unsubscribe();
 	}, [collection, query, orderBy, setError, setDocuments]);
 
-	return { documents, error };
+	return { documents, error, isLoading };
 };

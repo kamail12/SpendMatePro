@@ -1,0 +1,18 @@
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background: var(--modal-wrapper-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper .modal {
+    background: var(--light-color);
+    padding: var(--default-margin);
+    box-shadow: 1px 1px 2px var(--shadow-color);
+    border-radius: 5px;
+}

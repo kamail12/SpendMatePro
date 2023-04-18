@@ -1,0 +1,72 @@
+/* GLOBAL VARIABLES */
+:root {
+    --primary-color: #1a1a1a;
+    --secondary-color: #eeeeee;
+    --background-color: rgb(245, 245, 245);
+    --light-color: white;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --modal-wrapper-color: rgba(0,0,0,0.5);
+    --max-width: 1200px;
+
+    --accent-color: rgba(255,156,0,1);
+    --linear-color: linear-gradient(169deg, rgba(255,156,0,1) 0%, rgba(255,169,0,1) 38%, rgba(255,138,0,1) 89%, rgba(255,91,0,1) 100%);
+    --linear-white: linear-gradient(169deg, rgb(254, 254, 254) 0%, rgb(251, 251, 251) 38%, rgb(250, 250, 250) 89%, rgb(255, 255, 255) 100%);
+    --error-color: rgb(194, 0, 0);
+    --success-color: rgb(13, 162, 0);
+
+    --default-margin: 20px;
+    --default-padding: 10px;
+
+    --font-size-4x: 20px;
+    --font-size-3x: 16px;
+    --font-size-2x: 14px;
+    --font-size-1x: 10px;
+  }
+
+  .underline {
+    display: inline-block;
+    position: relative;
+    color: inherit;
+  }
+
+  .underline::after {
+    content: '';
+    position: absolute;
+    width: 80%;
+    transform: scaleX(1);
+    height: 2px;
+    bottom: 0;
+	margin-bottom: -2px;
+    left: 0;
+    background: var(--linear-color);
+    transition: transform 0.25s ease-out;
+    transform-origin: bottom left;
+  }
+  
+  .underline-animation {
+    display: inline-block;
+    position: relative;
+  }
+  
+  .underline-animation::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+	margin-bottom: -2px;
+    left: 0;
+    background: var(--linear-color);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
+  
+  .underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
+
+  .disable-scroll {
+    overflow: hidden;
+  }
