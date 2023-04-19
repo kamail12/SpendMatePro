@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './Modal.module.css';
 
-export const TransferModal = ({ balance, goal, onSubmit }) => {
+export const TransferModal = ({ balance, onSubmit }) => {
     const [amount, setAmount] = useState();
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
