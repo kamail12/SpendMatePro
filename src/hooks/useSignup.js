@@ -2,13 +2,15 @@ import { useState, useEffect } from "react";
 import { projectAuth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
 import { useFirestore } from "./useFirestore";
+import { useRef } from "react";
 
 export const useSignup = () => {
-	const [isCancelled, setIsCancelled] = useState(false);
 	const [error, setError] = useState(null);
 	const [isPending, setIsPending] = useState(false);
 	const { dispatch } = useAuthContext();
 	const { addDocument } = useFirestore("transactions");
+
+	const isMounted = useRef(true);
 
 	const signup = async (email, password, displayName, income) => {
 		setError(null);
@@ -36,13 +38,12 @@ export const useSignup = () => {
 			dispatch({ type: "LOGIN", payload: res.user });
 
 			//Update State
-			if (!isCancelled) {
+			if (isMounted.current) {
 				setIsPending(false);
 				setError(null);
 			}
 		} catch (err) {
-			if (!isCancelled) {
-				console.log(err.message);
+			if (isMounted.current) {
 				setError(err.message);
 				setIsPending(false);
 			}
@@ -50,7 +51,9 @@ export const useSignup = () => {
 	};
 
 	useEffect(() => {
-		return setIsCancelled(true);
+		return () => {
+			isMounted.current = false;
+		};
 	}, []);
 
 	return { error, isPending, signup };
