@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory } from "react-router-dom";
 
 import { useLogin } from "../../hooks/useLogin";
 import { useAuthContext } from "../../hooks/useAuthContext";
@@ -10,7 +10,7 @@ import styles from "./Login.module.css";
 export default function Login() {
 	const { user } = useAuthContext();
 	const history = useHistory();
-	if (user) history.replace('/home');
+	if (user) history.replace("/home");
 
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -23,8 +23,10 @@ export default function Login() {
 
 	return (
 		<div className={styles.wrapper}>
-		<form onSubmit={handleSubmit} className={styles["login-form"]}>
-			<h2 className={` ${styles.heading} underline`}>Login to use your wallet</h2>
+			<form onSubmit={handleSubmit} className={styles["login-form"]}>
+				<h2 className={` ${styles.heading} underline`}>
+					Zaloguj się do Portfela
+				</h2>
 
 				<input
 					type="email"
@@ -37,13 +39,29 @@ export default function Login() {
 					type="password"
 					onChange={e => setPassword(e.target.value)}
 					value={password}
-					placeholder="Password"
+					placeholder="Hasło"
 				/>
-			{!isPending && <button className={`${styles.submit} underline-animation`}>Login</button>}
-			{isPending && <button disabled className={`${styles.submit}`}>Loading...</button>}
-			{error && <p className={styles.error}>{error}</p>}
-		</form>
-		<div>Dont have an account? <Link to={'/signup'} className={`${styles.signup} underline-animation`}>Sign Up!</Link></div>
+				{!isPending && (
+					<button className={`${styles.submit} underline-animation`}>
+						Zaloguj się
+					</button>
+				)}
+				{isPending && (
+					<button disabled className={`${styles.submit}`}>
+						Ładowanie...
+					</button>
+				)}
+				{error && <p className={styles.error}>{error}</p>}
+			</form>
+			<div>
+				Nie masz konta?{" "}
+				<Link
+					to={"/signup"}
+					className={`${styles.signup} underline-animation`}
+				>
+					Zarejestruj się!
+				</Link>
+			</div>
 		</div>
 	);
 }

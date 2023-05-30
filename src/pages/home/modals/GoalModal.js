@@ -24,16 +24,16 @@ export const GoalModal = ({ onSubmit }) => {
     }
 
     return <div className={styles.container}>
-        <h2 className={`underline`}>New Goal</h2>
-        { !error && <p>Use form to create new goal</p> }
+        <h2 className={`underline`}>Ustaw swój Cel</h2>
+        { !error && <p>Użyj formularza żeby wprowadzić cel</p> }
         { error && <p className={styles.error}>{ error }</p> }
 
         <form className={styles.form} onSubmit={handleSubmit}>
-            <input type="text" name='title' placeholder='Goal name' onChange={(e) => resetError(e, (e) => setTitle(e.target.value))} />
-            <input type="number" name='amount' placeholder='Amount' onChange={(e) => resetError(e, (e) => setAmount(e.target.valueAsNumber))} />
+            <input type="text" name='title' placeholder='Nazwa Celu' onChange={(e) => resetError(e, (e) => setTitle(e.target.value))} />
+            <input type="number" name='amount' placeholder='Kwota' onChange={(e) => resetError(e, (e) => setAmount(e.target.valueAsNumber))} />
 
-            { !loading && <button className={`${styles.submit} underline-animation`} onClick={handleSubmit}>Add</button> }
-            { loading && <button className={`${styles.submit}`} disabled>Loading ...</button> }
+            { !loading && <button className={`${styles.submit} underline-animation`} onClick={handleSubmit}>Dodaj</button> }
+            { loading && <button className={`${styles.submit}`} disabled>Ładowanie ...</button> }
         </form>
     </div>;
 }

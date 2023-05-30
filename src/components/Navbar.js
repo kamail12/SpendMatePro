@@ -29,10 +29,10 @@ export default function Navbar() {
 
 				{user && (
 					<>
-						<li>Hello, {user.displayName} </li>
+						<li>Witaj, {user.displayName} </li>
 						<li>
 							<button className={styles.register} onClick={logout}>
-								Logout
+								Wyloguj
 							</button>
 						</li>
 					</>

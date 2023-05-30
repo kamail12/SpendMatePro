@@ -35,7 +35,7 @@ const Transactions = () => {
 			<div className={styles.container}>
 				<main>
 					<TransactionsList
-						title="Transactions"
+						title="Transakcje"
 						limit={transactions.length || 10}
 						loading={isLoading}
 						error={error}
@@ -44,17 +44,13 @@ const Transactions = () => {
 					/>
 				</main>
 				<aside>
-					<Item title={"Search"}>
+					<Item title={"Szukaj"}>
 						<input
 							className={styles.input}
 							type="text"
-							placeholder="Type something..."
+							placeholder="Wpisz czego szukasz..."
 							onChange={handleSearch}
 						/>
-					</Item>
-
-					<Item title={"Filter"}>
-						<span>Some filter functionality...</span>
 					</Item>
 				</aside>
 			</div>

@@ -23,15 +23,15 @@ export const TransferModal = ({ balance, onSubmit }) => {
     }
 
     return <div className={styles.container}>
-        <h2 className={`underline`}>Transfer Money</h2>
-        { !error && <p>Use form to transfer money to goal</p> }
+        <h2 className={`underline`}>Przekaż Środki</h2>
+        { !error && <p>Wpisz kwotę jaką chcesz przekazać na cel</p> }
         { error && <p className={styles.error}>{ error }</p> }
 
         <form className={styles.form} onSubmit={handleSubmit}>
-            <input type="number" name='amount' placeholder='Amount' onChange={(e) => resetError(e, (e) => setAmount(e.target.valueAsNumber))} />
+            <input type="number" name='amount' placeholder='Kwota' onChange={(e) => resetError(e, (e) => setAmount(e.target.valueAsNumber))} />
 
-            { !loading && <button className={`${styles.submit} underline-animation`} onClick={handleSubmit}>Add</button> }
-            { loading && <button className={`${styles.submit}`} disabled>Loading ...</button> }
+            { !loading && <button className={`${styles.submit} underline-animation`} onClick={handleSubmit}>Przekaż</button> }
+            { loading && <button className={`${styles.submit}`} disabled>Ładowanie ...</button> }
         </form>
     </div>;
 }
