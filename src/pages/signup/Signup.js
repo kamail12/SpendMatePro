@@ -26,7 +26,7 @@ export default function Signup() {
 	return (
 		<div className={styles.wrapper}>
 		<form onSubmit={handleSubmit} className={styles["signup-form"]}>
-		<h2 className={` ${styles.heading} underline`}>Create your awesome account</h2>
+		<h2 className={` ${styles.heading} underline`}>Stwórz swoje konto</h2>
 				<input
 					type="email"
 					onChange={e => setEmail(e.target.value)}
@@ -37,27 +37,27 @@ export default function Signup() {
 					type="password"
 					onChange={e => setPassword(e.target.value)}
 					value={password}
-					placeholder="Password"
+					placeholder="Hasło"
 				/>
 
 				<input
 					type="text"
 					onChange={e => setDisplayName(e.target.value)}
 					value={displayName}
-					placeholder="Display name"
+					placeholder="Nazwa profilu"
 				/>
 				<input
 					type="number"
 					min="0"
 					onChange={e => setIncome(e.target.value)}
 					value={income}
-					placeholder="Your income"
+					placeholder="Aktualny Stan Konta"
 				/>
-			{!isPending && <button className={`${styles.submit} underline-animation`}>Register</button>}
-			{isPending && <button disabled className={`${styles.submit}`}>Loading...</button>}
+			{!isPending && <button className={`${styles.submit} underline-animation`}>Zarejestruj się!</button>}
+			{isPending && <button disabled className={`${styles.submit}`}>Ładowanie...</button>}
 			{error && <p className={styles.error}>{error}</p>}
 		</form>
-		<div>Already have an account? <Link to={'/login'} className={`${styles.signup} underline-animation`}>Login here!</Link></div>
+		<div>Posiadasz aktywne konto? <Link to={'/login'} className={`${styles.signup} underline-animation`}>Zaloguj się tutaj!</Link></div>
 	</div>
 	);
 }

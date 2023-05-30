@@ -57,8 +57,8 @@
 
 .item .details .currency {
 	font-size: var(--font-size-1x);
-	padding-right: 1px;
 	font-weight: normal;
+	padding-left: 1px;
 }
 
 .item button {

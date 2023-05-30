@@ -51,6 +51,7 @@ export default function Home() {
 	const transferSum = sum(transfers, i => parseFloat(i.amount));
 	const goalSum = sum(goals, i => parseFloat(i.amount));
 	const balance = incomeSum - expenseSum - transferSum - goalSum;
+	const plBalance = balance.toLocaleString("pl-PL");
 
 	const closeGoal = async () => {
 		const transaction = {
@@ -75,7 +76,7 @@ export default function Home() {
 			isDissmisible: true,
 			element: (
 				<ExpenseModal
-					balance={balance}
+					balance={plBalance}
 					onClose={() => setModal(null)}
 					onSubmit={async ({ title, amount }) => {
 						const id = await createTransaction({
@@ -126,7 +127,7 @@ export default function Home() {
 			isDissmisible: true,
 			element: (
 				<TransferModal
-					balance={balance}
+					balance={plBalance}
 					onClose={() => setModal(null)}
 					onSubmit={async ({ amount }) => {
 						const transaction = {
@@ -178,7 +179,7 @@ export default function Home() {
 			<div className={styles.container}>
 				<main>
 					<Details
-						balance={balance}
+						balance={plBalance}
 						goal={active}
 						current={goalSum}
 						onGoalClick={
@@ -191,7 +192,7 @@ export default function Home() {
 						onBalanceClick={() => {}}
 					/>
 					<Transactions
-						title="Last Transactions"
+						title="Ostanie Transakcje"
 						limit={5}
 						loading={transactionsLoading}
 						error={transactionError}
@@ -203,37 +204,29 @@ export default function Home() {
 
 				<aside className={styles.sidebar}>
 					<Item.Button
-						title={"New Expense"}
-						description={"Add new expense to the list"}
+						title={"Nowy Wydatek"}
+						description={"Dodaj nowy wydatek do listy"}
 						onClick={handleOpenExpenseModal}
 					/>
 					<Item.Button
-						title={"New Income"}
-						description={"Add new income to the list"}
+						title={"Nowy Przychód"}
+						description={"Dodaj nowy przychód do listy"}
 						onClick={handleOpenIncomeModal}
 					/>
 					{active && (
 						<Item.Button
-							title={"Transfer to Goal"}
-							description={"Transfer money to goal"}
+							title={"Przekaż środki"}
+							description={"Przekaż środki na cel"}
 							onClick={handleOpenTransferModal}
 						/>
 					)}
 					{!active && (
 						<Item.Button
-							title={"Create Goal"}
-							description={"Create new goal"}
+							title={"Ustaw Cel"}
+							description={"Ustaw nowy cel"}
 							onClick={handleOpenGoalModal}
 						/>
 					)}
-
-					<Item title={"Upcoming Payments"}>
-						<span>Some upcoming payments...</span>
-					</Item>
-
-					<Item title={"Remainders"}>
-						<span>Some remainders...</span>
-					</Item>
 				</aside>
 			</div>
 			{modal && (

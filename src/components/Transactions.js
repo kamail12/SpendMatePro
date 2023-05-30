@@ -23,7 +23,7 @@ export const Transactions = ({
 						onClick={onShowMoreClick}
 						onTransactionDelete={onTransactionDelete}
 					>
-						Show more
+						Pokaż więcej!
 					</span>
 				)}
 			</h2>
@@ -39,7 +39,9 @@ export const Transactions = ({
 								<TransactionItem
 									key={index}
 									title={name}
-									amount={parseFloat(amount)}
+									amount={parseFloat(amount).toLocaleString(
+										"pl-PL"
+									)}
 									date={createdAt}
 									type={type}
 									id={id}
@@ -77,8 +79,8 @@ const TransactionItem = ({
 			</div>
 
 			<div className={styles.details}>
-				{amount && <span className={styles.currency}>$</span>}
 				{amount}
+				{amount && <span className={styles.currency}>Zł</span>}
 				{isDeletable && (
 					<button onClick={() => onTransactionDelete(id)}>x</button>
 				)}

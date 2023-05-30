@@ -24,16 +24,16 @@ export const IncomeModal = ({ onSubmit }) => {
     }
 
     return <div className={styles.container}>
-        <h2 className={`underline`}>New Income</h2>
-        { !error && <p>Use form to add new income</p> }
+        <h2 className={`underline`}>Nowy Przychód</h2>
+        { !error && <p>Użyj formularza żeby dodać przychód</p> }
         { error && <p className={styles.error}>{ error }</p> }
 
         <form className={styles.form} onSubmit={handleSubmit}>
-            <input type="text" name='title' placeholder='Income title' onChange={(e) => resetError(e, (e) => setTitle(e.target.value))} />
-            <input type="number" name='amount' placeholder='Amount' onChange={(e) => resetError(e, (e) => setAmount(e.target.valueAsNumber))} />
+            <input type="text" name='title' placeholder='Tytuł Przychodu' onChange={(e) => resetError(e, (e) => setTitle(e.target.value))} />
+            <input type="number" name='amount' placeholder='Kwota' onChange={(e) => resetError(e, (e) => setAmount(e.target.valueAsNumber))} />
 
-            { !loading && <button className={`${styles.submit} underline-animation`} onClick={handleSubmit}>Add</button> }
-            { loading && <button className={`${styles.submit}`} disabled>Loading ...</button> }
+            { !loading && <button className={`${styles.submit} underline-animation`} onClick={handleSubmit}>Dodaj</button> }
+            { loading && <button className={`${styles.submit}`} disabled>Ładowanie ...</button> }
         </form>
     </div>;
 }
